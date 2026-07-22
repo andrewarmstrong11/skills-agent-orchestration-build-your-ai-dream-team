@@ -1,0 +1,293 @@
+/* ==========================================================================
+   Project Pulse — Dashboard Stylesheet
+   ==========================================================================
+   CLASS-NAME CONTRACT for Coder's HTML (please match these exactly):
+
+   Root heading (optional):    <h1 class="dashboard-title">Project Pulse</h1>
+   Container:                  <div class="dashboard"> ... </div>
+   Card:                       <article class="project-card"> ... </article>
+     - Title:                  <h2 class="project-name">...</h2>
+     - Owner:                  <p class="project-owner">Owner: ...</p>
+     - Activity:               <p class="project-activity">...</p>
+
+   Status badge (choose ONE status class per card, combined with base class):
+     <span class="status-badge status-on-track">On Track</span>
+     <span class="status-badge status-at-risk">At Risk</span>
+     <span class="status-badge status-blocked">Blocked</span>
+     <span class="status-badge status-complete">Complete</span>
+
+   Priority indicator (choose ONE priority class per card, combined with base):
+     <span class="priority-badge priority-high">▲ High</span>
+     <span class="priority-badge priority-medium">● Medium</span>
+     <span class="priority-badge priority-low">▼ Low</span>
+
+   Note: badges/priority always include a text label (not color alone) for
+   accessibility. Icons above (▲ ● ▼) are optional but recommended.
+   ========================================================================== */
+
+/* ---------------------------- Base / Reset ------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-text-primary: #1a2233;
+  --color-text-secondary: #4b5568;
+  --color-text-muted: #6b7482;
+  --color-border: #e2e6ee;
+  --color-accent: #3b5bdb;
+
+  --color-status-ontrack-bg: #e3f7ec;
+  --color-status-ontrack-text: #0f7a3d;
+  --color-status-atrisk-bg: #fff4e0;
+  --color-status-atrisk-text: #9a5b00;
+  --color-status-blocked-bg: #fde4e4;
+  --color-status-blocked-text: #b3221c;
+  --color-status-complete-bg: #e6ecff;
+  --color-status-complete-text: #2a3f9d;
+
+  --color-priority-high: #c0202a;
+  --color-priority-medium: #b3720b;
+  --color-priority-low: #2a7a3f;
+
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-card: 0 1px 3px rgba(20, 25, 40, 0.06), 0 8px 20px rgba(20, 25, 40, 0.08);
+  --shadow-card-hover: 0 4px 10px rgba(20, 25, 40, 0.1), 0 14px 28px rgba(20, 25, 40, 0.12);
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ------------------------------ Page Header ------------------------------ */
+
+.dashboard-header {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1rem;
+}
+
+.dashboard-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+/* ------------------------------- Dashboard ------------------------------- */
+/* Responsive grid container: auto-fits cards without causing horizontal
+   scroll, from small mobile widths up through large desktop viewports. */
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3rem;
+  align-items: start;
+}
+
+/* ------------------------------ Project Card ----------------------------- */
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem 1.35rem;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  min-width: 0; /* allow flex/grid children to shrink and wrap text */
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* Card header row: title + status badge */
+.project-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.project-name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.project-owner {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.project-activity {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  line-height: 1.55;
+}
+
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ------------------------------ Status Badge ------------------------------ */
+/* Color + text label together (never color alone) for accessibility. */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.status-on-track {
+  background-color: var(--color-status-ontrack-bg);
+  color: var(--color-status-ontrack-text);
+}
+
+.status-at-risk {
+  background-color: var(--color-status-atrisk-bg);
+  color: var(--color-status-atrisk-text);
+}
+
+.status-blocked {
+  background-color: var(--color-status-blocked-bg);
+  color: var(--color-status-blocked-text);
+}
+
+.status-complete {
+  background-color: var(--color-status-complete-bg);
+  color: var(--color-status-complete-text);
+}
+
+/* ------------------------------- Priority --------------------------------- */
+/* Uses color plus a text label / icon glyph — not color alone. */
+
+.priority,
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.priority-high {
+  color: var(--color-priority-high);
+}
+
+.priority-medium {
+  color: var(--color-priority-medium);
+}
+
+.priority-low {
+  color: var(--color-priority-low);
+}
+
+/* ------------------------------- Responsive -------------------------------- */
+
+/* Small phones: single column, tighter spacing */
+@media (max-width: 480px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem 2rem;
+  }
+
+  .dashboard-header {
+    padding: 1.5rem 1rem 0.75rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .project-card {
+    padding: 1rem;
+  }
+}
+
+/* Tablets */
+@media (min-width: 481px) and (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
+
+/* Large desktop: cap card growth so cards don't become overly wide */
+@media (min-width: 1280px) {
+  .dashboard {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* ------------------------------ Accessibility ------------------------------ */
+
+a:focus-visible,
+button:focus-visible,
+.project-card:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    transition: none;
+  }
+}

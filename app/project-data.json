@@ -1,0 +1,46 @@
+{
+  "projects": [
+    {
+      "name": "Customer Portal Revamp",
+      "owner": "Priya Sharma",
+      "status": "On Track",
+      "recentActivity": "Merged the new authentication flow and deployed to staging for QA sign-off.",
+      "priority": "High"
+    },
+    {
+      "name": "Internal Analytics Migration to the New Unified Cloud Data Warehouse Platform",
+      "owner": "Marcus Lee",
+      "status": "At Risk",
+      "recentActivity": "Schema migration delayed due to unexpected data quality issues.",
+      "priority": "High"
+    },
+    {
+      "name": "Mobile App Localization",
+      "owner": "Fatima Al-Sayed",
+      "status": "Blocked",
+      "recentActivity": "Waiting on translation vendor to deliver final strings for German and Japanese locales before the localization QA pass can begin, which is now over a week overdue.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Vendor Billing Integration",
+      "owner": "Tom Reilly",
+      "status": "Complete",
+      "recentActivity": "Final invoice reconciliation completed and signed off by finance.",
+      "priority": "Low"
+    },
+    {
+      "name": "Design System 2.0",
+      "owner": "Ana Costa",
+      "status": "On Track",
+      "recentActivity": "Published updated component tokens to the shared library.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Security Audit Remediation",
+      "owner": "David Kim",
+      "status": "At Risk",
+      "recentActivity": "Two critical findings remain open past the target remediation date.",
+      "priority": "High"
+    }
+  ]
+}

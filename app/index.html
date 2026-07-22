@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Pulse</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Project Pulse</h1>
+  </header>
+
+  <main class="dashboard" id="dashboard">
+    <p>Loading projects…</p>
+  </main>
+
+  <script>
+    function slugify(value) {
+      return String(value)
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-");
+    }
+
+    function fallback(value) {
+      return value === undefined || value === null || value === "" ? "Unknown" : value;
+    }
+
+    function renderError(message) {
+      const dashboard = document.getElementById("dashboard");
+      dashboard.innerHTML = "";
+      const errorEl = document.createElement("p");
+      errorEl.className = "error-message";
+      errorEl.textContent = message;
+      dashboard.appendChild(errorEl);
+    }
+
+    function renderEmptyState() {
+      const dashboard = document.getElementById("dashboard");
+      dashboard.innerHTML = "";
+      const emptyEl = document.createElement("p");
+      emptyEl.className = "empty-message";
+      emptyEl.textContent = "No projects to display yet.";
+      dashboard.appendChild(emptyEl);
+    }
+
+    function renderProjects(projects) {
+      const dashboard = document.getElementById("dashboard");
+      dashboard.innerHTML = "";
+
+      if (!Array.isArray(projects) || projects.length === 0) {
+        renderEmptyState();
+        return;
+      }
+
+      projects.forEach(function (project) {
+        const name = fallback(project.name);
+        const owner = fallback(project.owner);
+        const status = fallback(project.status);
+        const recentActivity = fallback(project.recentActivity);
+        const priority = fallback(project.priority);
+
+        const card = document.createElement("article");
+        card.className = "project-card";
+
+        const heading = document.createElement("h2");
+        heading.textContent = name;
+        card.appendChild(heading);
+
+        const ownerEl = document.createElement("p");
+        ownerEl.className = "project-owner";
+        ownerEl.textContent = "Owner: " + owner;
+        card.appendChild(ownerEl);
+
+        const statusEl = document.createElement("span");
+        statusEl.className = "status-badge status-" + slugify(status);
+        statusEl.textContent = status;
+        card.appendChild(statusEl);
+
+        const priorityEl = document.createElement("span");
+        priorityEl.className = "priority-badge priority-" + slugify(priority);
+        priorityEl.textContent = priority;
+        card.appendChild(priorityEl);
+
+        const activityEl = document.createElement("p");
+        activityEl.className = "project-activity";
+        activityEl.textContent = recentActivity;
+        card.appendChild(activityEl);
+
+        dashboard.appendChild(card);
+      });
+    }
+
+    fetch("./project-data.json")
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Failed to load project data (status " + response.status + ").");
+        }
+        return response.json();
+      })
+      .then(function (data) {
+        renderProjects(data && data.projects);
+      })
+      .catch(function (error) {
+        renderError("Unable to load project data: " + error.message);
+      });
+  </script>
+</body>
+</html>
